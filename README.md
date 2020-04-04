@@ -1,1 +1,1 @@
-# vipparty
+# VIP Party
