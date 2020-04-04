@@ -9,16 +9,16 @@ const client = require('twilio')(accountSid, authToken)
 
 function App() {
   var [name, setName] = useState({})
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    
-  }
-
+  
   const accountSid = "AC8e3ad87b2b2f267fa46b49d4e8c05bc6";
   const apiKey = "SKd9d5c9349104027eb3c74e8b335eab75";
   const apiSecret = "k3Rlor1aPphRAWxNJeBlxgqO1r7QPLAx";
-
+  
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+  
+  }
+  
   return (
     <div className="App">
       <input type="name" placeholder="name" value={name} onChange={e => setName(e.target.value)} >
