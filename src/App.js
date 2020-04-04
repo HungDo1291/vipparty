@@ -1,30 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Video, { connect, createLocalVideoTrack } from 'twilio-video'
-var accessToken = require('twilio-video')
+import { AccessToken } from 'twilio';
+var accessToken = require('twilio').jwt.AccessToken;
 
 function App() {
-  var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzc3ZDJkYTQ0NDJiYmI0NmIxNDRlY2NhYjVjMjE2Mjg4LTE1ODYwMjQyODQiLCJpc3MiOiJTSzc3ZDJkYTQ0NDJiYmI0NmIxNDRlY2NhYjVjMjE2Mjg4Iiwic3ViIjoiQUM4ZTNhZDg3YjJiMmYyNjdmYTQ2YjQ5ZDRlOGMwNWJjNiIsImV4cCI6MTU4NjAyNzg4NCwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiaGkiLCJ2aWRlbyI6eyJyb29tIjoiZXhhbXBsZS1jbGFzcyJ9fX0.I97_affnmAKM7ijVEWG-1_WBloHmtVZjXBLVw8FHcjg"
+  var [name, setName] = useState({})
 
-  createLocalVideoTrack().then(track => {
-    const localMediaContainer = document.getElementById('local-media');
-    localMediaContainer.appendChild(track.attach())
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    console.log("changed name to " + name)
+    const tokenKey = new accessToken(accountSid, apiKey, apiSecret);
+    tokenKey.addGrant(videoGrant)
+    tokenKey.identity = identity
+    var token = tokenKey.toJwt();
+    console.log(tokenKey.toJwt())
+    createVideo()
+    connectVideo(token)
+  }
+
+  //create access token for user
+  const VideoGrant = accessToken.VideoGrant;
+
+  const accountSid = "AC8e3ad87b2b2f267fa46b49d4e8c05bc6";
+  const apiKey = "SKd9d5c9349104027eb3c74e8b335eab75";
+  const apiSecret = "k3Rlor1aPphRAWxNJeBlxgqO1r7QPLAx";
+
+  const identity = name
+
+  const videoGrant = new VideoGrant({
+    room: "example-room"
   })
+
+  function createVideo() {
+    createLocalVideoTrack().then(track => {
+      const localMediaContainer = document.getElementById('local-media');
+      localMediaContainer.appendChild(track.attach())
+    })
+  }
   
-  connect(token, { name: "example-class"}).then(room => {
-    console.log("User has joined existing class " + room.sid)
-  })
-
-  Video.connect(token, { name: "example-class" }).then(room => {
-    console.log('User has connected to the room with the name of ' + room.name)
-  })
-
+  function connectVideo(token) {
+    connect(token, { name: "example-class"}).then(room => {
+      console.log("User has joined existing class " + room.sid)
+    })
+  }
 
   return (
     <div className="App">
+      <input type="name" placeholder="name" value={name} onChange={e => setName(e.target.value)} >
+      </input>
+      <button onClick={handleSubmit}>Join class</button>
       <div id="local-media">
-        
+
       </div>
     </div>
   );
