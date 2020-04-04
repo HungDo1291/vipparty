@@ -1,24 +1,20 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import * as Video from 'twilio-video'
+var accessToken = require('twilio-video')
 
 function App() {
+
+
+
+  Video.connect('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzc3ZDJkYTQ0NDJiYmI0NmIxNDRlY2NhYjVjMjE2Mjg4LTE1ODYwMjQyODQiLCJpc3MiOiJTSzc3ZDJkYTQ0NDJiYmI0NmIxNDRlY2NhYjVjMjE2Mjg4Iiwic3ViIjoiQUM4ZTNhZDg3YjJiMmYyNjdmYTQ2YjQ5ZDRlOGMwNWJjNiIsImV4cCI6MTU4NjAyNzg4NCwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiaGkiLCJ2aWRlbyI6eyJyb29tIjoiZXhhbXBsZS1jbGFzcyJ9fX0.I97_affnmAKM7ijVEWG-1_WBloHmtVZjXBLVw8FHcjg', { name: "example-class" }).then(room => {
+    console.log('User has connected to the room with the name of ' + room.name)
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
     </div>
   );
 }
